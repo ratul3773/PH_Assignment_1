@@ -83,13 +83,13 @@ function getUniqueValues<T>(array1:Array<T>,array2:Array<T>): Array<T> {
     return resultantArray;
 }
 
+
 function calculateTotalPrice(products: Array<{name: string; price: number; quantity: number, discount?: number}>): number {
 
-    let total = 0;
-    for (const product of products) {
-        const discount = product.discount ? product.discount : 0;
-        const priceAfterDiscount = product.price - (product.price * discount) / 100;
-        total += priceAfterDiscount * product.quantity;
-    }
+    const total = products.reduce((sum, p) => {
+    const discount = p.discount ?? 0;
+    const priceAfterDiscount = p.price - (p.price * discount) / 100;
+    return sum + priceAfterDiscount * p.quantity;
+     }, 0);
     return total;
 }
